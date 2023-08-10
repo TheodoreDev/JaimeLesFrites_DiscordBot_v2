@@ -3,15 +3,15 @@ const {Configuration, OpenAIApi} = require("openai");
 const config = require("../../config.json");
 
 const configuration = new Configuration({
-    apiKey: config.openAIapi
+    apiKey: config.APIkey
 });
 
-const openai = new OpenAIApi(configuration);
+const openai = new OpenAIApi(configuration)
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName("chadgptp")
-    .setDescription("Ask Chad GPTP a question.")
+    .setName("chadgpdp")
+    .setDescription("Ask Chad GPDP a question.")
     .setDMPermission(true)
     .addStringOption(options => options
         .setName("request")
@@ -30,15 +30,15 @@ module.exports = {
 
         try {
             const res = await openai.createCompletion({
-                model: "gpt-3.5-turbo",
+                model: 'text-davinci-003',
                 max_tokens: 2048,
-                temperature: 1,
-                prompt: question
-            })
+                temperature: 0.5,
+                inputs: question,
+              })
 
             const embed = new EmbedBuilder()
             .setColor('Blue')
-            .setDescription(`\`\`\`${res.data.choices[0].text}\`\`\``)
+            .setDescription(`${question}` + `\n\`\`\`${res.data.choices[0].text}\`\`\``)
 
             await interaction.editReply({
                 embeds: [embed],

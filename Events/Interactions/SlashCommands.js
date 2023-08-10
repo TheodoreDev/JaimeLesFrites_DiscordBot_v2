@@ -1,4 +1,5 @@
 const {ChatInputCommandInteraction} = require("discord.js")
+const {logger} = require("../../Functions/Logger")
 
 module.exports = {
     name: "interactionCreate",
@@ -11,7 +12,7 @@ module.exports = {
         if(!interaction.isChatInputCommand()) return;
 
         const command = client.commands.get(interaction.commandName);
-        if(!command) 
+        if(!command)
         return interaction.reply({
             content: "This command is outdated.",
             ephemeral: true,
@@ -28,11 +29,17 @@ module.exports = {
             const subCommandFile = client.subCommands.get(`${interaction.commandName}.${subCommand}`);
             if(!subCommandFile)
             return interaction.reply({
-                content: "This sub command is outdated.",
+                content: "Only dev",
                 ephemeral: true,
-            })
+            });
             
             subCommandFile.execute(interaction, client);
-        } else command.execute(interaction, client);
+            logger('Succes', interaction)
+
+        } else {
+            command.execute(interaction, client);
+            logger('Succes', interaction)
+            
+        }
     }
-}
+};
