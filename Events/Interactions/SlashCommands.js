@@ -29,7 +29,7 @@ module.exports = {
             const subCommandFile = client.subCommands.get(`${interaction.commandName}.${subCommand}`);
             if(!subCommandFile)
             return interaction.reply({
-                content: "Only dev",
+                content: "This sub command is outdated.",
                 ephemeral: true,
             });
             
