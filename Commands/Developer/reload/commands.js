@@ -9,8 +9,8 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction 
      * @param {Client} client 
      */
-    execute(interaction, client) {
+    async execute(interaction, client) {
         loadCommands(client);
-        interaction.reply({content: "Reloaded commands !", ephemeral: true});
+        await interaction.reply({content: "Reloaded commands !", ephemeral: true});
     }
 }

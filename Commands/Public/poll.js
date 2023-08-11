@@ -5,7 +5,6 @@ module.exports = {
     .setName("poll")
     .setDescription("Create a poll !")
     .setDMPermission(false)
-    .setDefaultMemberPermissions(PermissionFlagsBits.Connect)
     .addStringOption(options => options
         .setName("question")
         .setDescription("Provide the topic of the poll.")

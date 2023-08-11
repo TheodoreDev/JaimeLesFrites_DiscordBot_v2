@@ -2,11 +2,11 @@ const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionFlagsBits, C
 const GuildConfiguration = require("../../../Schemas/GuildConfiguration");
 
 module.exports = {
+    developer: true,
     data: new SlashCommandBuilder()
     .setName("config-suggestion")
     .setDescription("Configure Suggestion.")
     .setDMPermission(false)
-    .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     .addSubcommand((subcommand) => subcommand
         .setName("add")
         .setDescription("Add a suggestion chanel.")
