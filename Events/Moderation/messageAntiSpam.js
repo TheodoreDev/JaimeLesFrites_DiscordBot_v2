@@ -1,6 +1,8 @@
 const { Message, Client, PermissionFlagsBits } = require("discord.js");
 const AntiSpam = require("discord-anti-spam");
 
+const User = new Map()
+
 module.exports = {
     name: "messageCreate",
 
@@ -10,17 +12,30 @@ module.exports = {
      * @param {Client} client 
      * @returns
      */
-    execute(message, client) {
-        console.log("ok")
-        const antiSpam = new AntiSpam({
-            warnThreshold: 4,
-            muteTreshold: 50,
-            warnMessage: `@${message.author.username}, stop spamming like a "Frite 🍟"`,
-            unMuteTime: 1440,
-            verbose: false,
-            removeMessages: true,
-            ignoredPermissions: [PermissionFlagsBits.ManageMessages],
-        });
-        antiSpam
+    async execute(message, client) {
+        
+        if(User.get(message.author.id)) {
+            const data = User.get(message.author.id)
+            let dif = message.createdTimestamp - data.lastMessage.createdTimestamp;
+            let count = data.msgCount;
+
+            if(dif > 3000) {
+                clearTimeout(data.timer);
+                data.msgCount = 1;
+                data.lastMessage = message;
+
+                data.timer = setTimeout(() => {
+                    User.delete(message.author.id)
+                }, 10000);
+
+                User.set(message.author.id, data)
+            } else {
+                data.msgCount ++;
+                if(data.msgCount > 7) {
+                    
+                }
+            }
+        }
+        
     }
 }
