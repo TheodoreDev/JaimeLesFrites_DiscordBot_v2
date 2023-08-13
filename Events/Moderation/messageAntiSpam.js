@@ -1,5 +1,4 @@
-const { Message, Client, PermissionFlagsBits } = require("discord.js");
-const AntiSpam = require("discord-anti-spam");
+const { Message, PermissionFlagsBits } = require("discord.js");
 
 const User = new Map()
 
@@ -9,10 +8,9 @@ module.exports = {
     /**
      * 
      * @param {Message} message 
-     * @param {Client} client 
-     * @returns
      */
-    async execute(message, client) {
+    async execute(message) {
+        if(message.member.permissions.has(PermissionFlagsBits.ManageMessages)) return;
         
         if(User.get(message.author.id)) {
             const data = User.get(message.author.id)
@@ -30,11 +28,41 @@ module.exports = {
 
                 User.set(message.author.id, data)
             } else {
-                data.msgCount ++;
-                if(data.msgCount > 7) {
-                    
+                count ++;
+                if(count > 10) {
+                
+                    const messages = [...(await message.channel.messages.fetch({before: message.id}))
+                        .filter(m => m.author.id === message.author.id)
+                        .values()]
+                        .slice(0, 14);
+
+                    await message.channel.bulkDelete(messages);
+
+                    await message.channel.send(`${message.author} was mute for spamming !`)
+                    .then((msg) => {
+                        setTimeout(() => msg.delete(), 10000)
+                    })
+                    await message.member.timeout(86400000, "Spam")
+                } else {
+                    data.msgCount = count;
+                    User.set(message.author.id, data);
+
+                    await message.channel.send(`${message.author}, stop spamming like a "Frite 🍟"`)
+                    .then((msg) => {
+                        setTimeout(() => msg.delete(), 10000)
+                    })
                 }
             }
+        } else {
+            let FN = setTimeout(() => {
+                User.delete(message.author.id)
+            }, 604800000);
+
+            User.set(message.author.id, {
+                msgCount: 1,
+                lastMessage: message,
+                timer: FN
+            })
         }
         
     }

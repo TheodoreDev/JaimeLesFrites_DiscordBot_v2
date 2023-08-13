@@ -14,9 +14,9 @@ module.exports = {
         try {
             if(message.author.bot) return;
 
-            if(message.content.includes("https://") || message.content.includes("discord.gg") || message.content.includes("http://"))
+            if(message.content.includes("discord.gg") || message.content.includes("http://"))
 
-            if(message.member.roles.cache.has("1137411181485768824")) {
+            if(message.member.roles.cache.has("1137411181485768824") || message.member.permissions.has(PermissionFlagsBits.ModerateMembers)) {
                 return;
             } else {
                 await message.delete()
