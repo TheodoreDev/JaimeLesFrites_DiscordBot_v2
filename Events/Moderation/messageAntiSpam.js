@@ -56,7 +56,7 @@ module.exports = {
         } else {
             let FN = setTimeout(() => {
                 User.delete(message.author.id)
-            }, 604800000);
+            }, 7200000);
 
             User.set(message.author.id, {
                 msgCount: 1,

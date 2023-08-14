@@ -18,6 +18,7 @@ connect(client.config.dbURL, {
 client.events = new Collection();
 client.commands = new Collection();
 client.subCommands = new Collection();
+client.badWords = new Collection();
 
 loadEvents(client)
 
