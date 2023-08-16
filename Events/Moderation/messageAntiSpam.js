@@ -29,7 +29,7 @@ module.exports = {
                 User.set(message.author.id, data)
             } else {
                 count ++;
-                if(count > 10) {
+                if(count > 6) {
                 
                     const messages = [...(await message.channel.messages.fetch({before: message.id}))
                         .filter(m => m.author.id === message.author.id)
@@ -47,10 +47,19 @@ module.exports = {
                     data.msgCount = count;
                     User.set(message.author.id, data);
 
-                    await message.channel.send(`${message.author}, stop spamming like a "Frite 🍟"`)
-                    .then((msg) => {
-                        setTimeout(() => msg.delete(), 10000)
-                    })
+                    if(count > 3 && count < 7 ) {
+                        const messages2 = [...(await message.channel.messages.fetch({before: message.id}))
+                            .filter(m => m.author.id === message.author.id)
+                            .values()]
+                            .slice(0, 7);
+
+                        await message.channel.bulkDelete(messages2);
+                        message.channel.send(`${message.author}, stop spamming like a "Frite 🍟"`)
+                        .then((msg) => {
+                            setTimeout(() => msg.delete(), 10000)
+                        })
+                        return;
+                    }
                 }
             }
         } else {
