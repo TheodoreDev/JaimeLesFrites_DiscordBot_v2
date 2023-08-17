@@ -10,6 +10,7 @@ module.exports = {
      * @param {Message} message 
      */
     async execute(message) {
+        if(message.author.bot) return;
         if(message.member.permissions.has(PermissionFlagsBits.ManageMessages)) return;
         
         if(User.get(message.author.id)) {

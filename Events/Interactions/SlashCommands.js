@@ -1,5 +1,5 @@
-const {ChatInputCommandInteraction} = require("discord.js")
-const {logger} = require("../../Functions/Logger")
+const {ChatInputCommandInteraction, PermissionFlagsBits} = require("discord.js")
+const {logger} = require("../../Functions/Logger");
 
 module.exports = {
     name: "interactionCreate",
@@ -8,7 +8,7 @@ module.exports = {
      * 
      * @param {ChatInputCommandInteraction} interaction     
      */
-    execute(interaction, client) {
+    async execute(interaction, client) {
         if(!interaction.isChatInputCommand()) return;
 
         const command = client.commands.get(interaction.commandName);
@@ -18,11 +18,19 @@ module.exports = {
             ephemeral: true,
         });
 
-        if(command.developer && interaction.user.id !== "945595950984986664" && interaction.user.id !== "592399930350370855")
+        if(command.developer && interaction.user.id !== "945595950984986664"/* || !interaction.user.id !== "592399930350370855"*/)
         return interaction.reply({
             content: "This command is only for dev.",
             ephemeral: true,
         });
+
+        if(interaction.guildId === "1137053317332226128"){
+            if(!interaction.member.roles.cache.has("1138195076489691176"))
+            return interaction.reply({
+                content: "You are not allowed to use commands",
+                ephemeral: true
+            })
+        }
 
         const subCommand = interaction.options.getSubcommand(false);
         if(subCommand){

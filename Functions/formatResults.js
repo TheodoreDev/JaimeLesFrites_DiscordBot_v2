@@ -9,7 +9,7 @@ const pb = {
    
   function formatResults(upvotes = [], downvotes = []) {
     const totalVotes = upvotes.length + downvotes.length;
-    const progressBarLength = 14;
+    const progressBarLength = 10;
     const filledSquares = Math.round((upvotes.length / totalVotes) * progressBarLength) || 0;
     const emptySquares = progressBarLength - filledSquares || 0;
    
