@@ -121,6 +121,29 @@ module.exports = {
                 embeds: [suggestionEmbed],
                 components: [firstRow, secondRow],
             })
+
+            var winner = ""
+            const suggestionNewEmbed = new EmbedBuilder()
+            .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({size: 256})})
+            .addFields([
+                {name: "Suggestion", value: suggestionText},
+                {name: "Winner", value: winner},
+            ])
+
+            setTimeout(() => {
+                if (formatResults.upPercentage > formatResults.downPercentage){
+                    winner = "upvote"
+                }else if (formatResults.downPercentage > formatResults.upPercentage){
+                    winner = "downVote"
+                } else {
+                    winner = "no winner"
+                }
+                suggestionMessage.edit({
+                    content: "@everyone , suggestion close",
+                    embeds: [suggestionNewEmbed],
+                    components: []
+                })
+            }, 10000)
         } catch (error) {
             console.log(`Error in /suggest: ${error}`)
         }

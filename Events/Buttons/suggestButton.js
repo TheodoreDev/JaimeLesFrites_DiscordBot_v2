@@ -64,7 +64,7 @@ module.exports = {
                 });
                 targetMessage.edit({
                     embeds: [targetMessageEmbed],
-                    components: [targetMessage.components[0]]
+                    components: []
                 });
                 return;
             }

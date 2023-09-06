@@ -32,6 +32,8 @@ const pb = {
       } downvotes (${downPercentage.toFixed(1)}%)`
     );
     results.push(progressBar);
+
+    module.exports = {upPercentage, downPercentage}
    
     return results.join('\n');
   }

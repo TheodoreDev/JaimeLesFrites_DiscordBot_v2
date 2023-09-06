@@ -4,6 +4,7 @@ let badWordsArray = [
     "Fuck",
     "fuck",
     "gueule",
+    "Gueule",
     "Pute",
     "pute",
     "Connard",
@@ -11,7 +12,6 @@ let badWordsArray = [
     "FDP",
     "fdp",
     "sale chien",
-    "XD"
 ]
 
 module.exports = {
