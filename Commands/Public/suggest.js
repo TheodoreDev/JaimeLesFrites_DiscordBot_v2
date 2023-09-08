@@ -133,7 +133,7 @@ module.exports = {
 
             setTimeout(() => {
                 if (formatResults.upPercentage > formatResults.downPercentage){
-                    winner = "upvote"
+                    
                 }else if (formatResults.downPercentage > formatResults.upPercentage){
                     winner = "downVote"
                 } else {
