@@ -122,13 +122,14 @@ module.exports = {
                 components: [firstRow, secondRow],
             })
 
-            var winner = ""
+            var winner = "no winner"
             const suggestionNewEmbed = new EmbedBuilder()
             .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({size: 256})})
             .addFields([
                 {name: "Suggestion", value: suggestionText},
                 {name: "Winner", value: winner},
             ])
+            .setColor("Yellow")
 
             setTimeout(() => {
                 if (formatResults.upPercentage > formatResults.downPercentage){
