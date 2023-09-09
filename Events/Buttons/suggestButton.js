@@ -1,4 +1,4 @@
-const { Interaction } = require("discord.js");
+const { Interaction, EmbedBuilder } = require("discord.js");
 const Suggestion = require("../../Schemas/Suggestion");
 const formatResults = require("../../Functions/formatResults");
 
@@ -43,6 +43,34 @@ module.exports = {
                     embeds: [targetMessageEmbed],
                     components: [targetMessage.components[0]]
                 });
+                setTimeout(() => {
+                    const Upvote = parseInt(targetMessageEmbed.fields[3].value)
+                    const Downvote = parseInt(targetMessageEmbed.fields[4].value)
+                    var winner = "no winner"
+                    const suggestionNewEmbed = new EmbedBuilder()
+                    .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({size: 256})})
+                    .setFields([
+                        {name: "Suggestion", value: targetSuggestion.content},
+                    ])
+                    .setColor("Yellow")
+    
+                    if(Upvote > Downvote) {
+                        winner = "Upvote"
+                        suggestionNewEmbed.addFields([{name: "Winner :", value: winner}])
+                    }else if(Upvote < Downvote) {
+                        winner = "Downvote"
+                        suggestionNewEmbed.addFields([{name: "Winner :", value: winner}])
+                    }else {
+                        winner = "no winner"
+                        suggestionNewEmbed.addFields([{name: "Winner :", value: winner}])
+                    }
+    
+                    targetMessage.edit({
+                        content: "@everyone , suggestion close",
+                        embeds: [suggestionNewEmbed],
+                        components: []
+                    })
+                }, 172800000)
                 return;
             }
             if(action === "reject") {
@@ -89,6 +117,8 @@ module.exports = {
                     targetSuggestion.upvote,
                     targetSuggestion.downvote,
                 );
+                const newUpCount = parseInt(targetMessageEmbed.fields[3].value) + 1;
+                targetMessageEmbed.fields[3].value = newUpCount;
                 targetMessage.edit({
                     embeds: [targetMessageEmbed],
                 });
@@ -116,6 +146,8 @@ module.exports = {
                     targetSuggestion.upvote,
                     targetSuggestion.downvote,
                 );
+                const newDownCount = parseInt(targetMessageEmbed.fields[4].value) + 1;
+                targetMessageEmbed.fields[4].value = newDownCount;
                 targetMessage.edit({
                     embeds: [targetMessageEmbed],
                 });

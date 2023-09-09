@@ -88,6 +88,8 @@ module.exports = {
                 {name: "Suggestion", value: suggestionText},
                 {name: "Status", value: "⌛ Pending"},
                 {name: "Votes", value: formatResults()},
+                {name: "Upvote", value: "0", inline: true},
+                {name: "Downvote", value: "0", inline: true},
             ])
             .setColor('Yellow');
 
@@ -121,24 +123,6 @@ module.exports = {
                 embeds: [suggestionEmbed],
                 components: [firstRow, secondRow],
             })
-
-            var winner = "no winner"
-            const suggestionNewEmbed = new EmbedBuilder()
-            .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({size: 256})})
-            .addFields([
-                {name: "Suggestion", value: suggestionText},
-            ])
-            .setColor("Yellow")
-
-            setTimeout(() => {
-
-                suggestionNewEmbed.addFields([{name: "winner", value: winner}])
-                suggestionMessage.edit({
-                    content: "@everyone , suggestion close",
-                    embeds: [suggestionNewEmbed],
-                    components: []
-                })
-            }, 10000)
         } catch (error) {
             console.log(`Error in /suggest: ${error}`)
         }
