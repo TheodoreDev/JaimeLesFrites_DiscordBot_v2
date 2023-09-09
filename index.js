@@ -22,4 +22,4 @@ client.badWords = new Collection();
 
 loadEvents(client)
 
-client.login(client.config.token_test)
+client.login(client.config.token)
