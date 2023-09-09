@@ -87,7 +87,7 @@ module.exports = {
             .addFields([
                 {name: "Suggestion", value: suggestionText},
                 {name: "Status", value: "⌛ Pending"},
-                {name: "Votes", value: formatResults()}
+                {name: "Votes", value: formatResults()},
             ])
             .setColor('Yellow');
 
@@ -127,18 +127,12 @@ module.exports = {
             .setAuthor({name: interaction.user.username, iconURL: interaction.user.displayAvatarURL({size: 256})})
             .addFields([
                 {name: "Suggestion", value: suggestionText},
-                {name: "Winner", value: winner},
             ])
             .setColor("Yellow")
 
             setTimeout(() => {
-                if (formatResults.upPercentage > formatResults.downPercentage){
-                    
-                }else if (formatResults.downPercentage > formatResults.upPercentage){
-                    winner = "downVote"
-                } else {
-                    winner = "no winner"
-                }
+
+                suggestionNewEmbed.addFields([{name: "winner", value: winner}])
                 suggestionMessage.edit({
                     content: "@everyone , suggestion close",
                     embeds: [suggestionNewEmbed],

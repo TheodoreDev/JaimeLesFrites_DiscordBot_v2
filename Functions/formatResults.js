@@ -33,7 +33,7 @@ const pb = {
     );
     results.push(progressBar);
 
-    module.exports = {upPercentage, downPercentage}
+    module.exports = {upvotes, downvotes}
    
     return results.join('\n');
   }
