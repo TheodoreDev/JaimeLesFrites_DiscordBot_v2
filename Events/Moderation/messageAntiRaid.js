@@ -1,18 +1,5 @@
 const { Message, Client, PermissionFlagsBits } = require("discord.js");
-
-let badWordsArray = [
-    "Fuck",
-    "fuck",
-    "gueule",
-    "Gueule",
-    "Pute",
-    "pute",
-    "Connard",
-    "connard",
-    "FDP",
-    "fdp",
-    "sale chien",
-]
+const BadWordsConfiguration = require("../../Schemas/BadWordsConfiguration")
 
 module.exports = {
     name: "messageCreate",
@@ -24,6 +11,13 @@ module.exports = {
      * @returns
      */
     async execute(message, client) {
+
+        let badWordsGuild = await BadWordsConfiguration.findOne({guildId: message.guildId});
+        if(!badWordsGuild){
+            badWordsGuild = new BadWordsConfiguration({guildId: message.guildId});
+        };
+
+        let badWordArray = badWordsGuild.badWordsArray
 
         try {
             if(message.author.bot) return;
@@ -46,7 +40,7 @@ module.exports = {
                 })
             }
 
-            badWordsArray.forEach(badWord => {
+            badWordArray.forEach(badWord => {
                 if(message.content.includes(`${badWord}`)) {
                     if(message.member.roles.cache.has("1137411181485768824") || message.member.permissions.has(PermissionFlagsBits.ModerateMembers)) {
                         return;

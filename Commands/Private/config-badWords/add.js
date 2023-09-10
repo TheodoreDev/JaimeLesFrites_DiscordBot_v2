@@ -16,7 +16,6 @@ module.exports = {
         badWordsInput.split("-").forEach(badWord => {
             badWordsArrayInput.push(badWord)
         });
-        console.log(badWordsArrayInput)
 
         let badWordsGuild = await BadWordsConfiguration.findOne({guildId: interaction.guildId});
         if(!badWordsGuild){
@@ -24,24 +23,15 @@ module.exports = {
         };
 
         badWordsArrayInput.forEach(badWord => {
-            badWordsGuild.badWordsArray.forEach(badWordRegistered => {
-
-                if(badWordRegistered === badWord){
-                    interaction.reply({
-                        content: `The word "${badWord}" is already registered.`,
-                        ephemeral: true
-                    })
-                    return;
-                }else {
-                    badWordsGuild.badWordsArray.push(badWord)
-                }
-            })
             
+            if(!badWordsGuild.badWordsArray.includes(`${badWord}`)){
+                badWordsGuild.badWordsArray.push(badWord)
+            }
 
         })
         await badWordsGuild.save()
-        await interaction.reply({
-            content: "Your words were well register",
+        interaction.reply({
+            content: `Your words were well register`,
             ephemeral: true
         })
     }
