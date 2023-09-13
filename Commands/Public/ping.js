@@ -11,7 +11,7 @@ module.exports = {
      * @param {ChatInputCommandInteraction} interaction 
      */
     execute(interaction) {
-        interaction.reply({content: "Pong!" , ephemeral: false})
+        interaction.reply({content: "Pong!" , ephemeral: true})
     }
 
 }
