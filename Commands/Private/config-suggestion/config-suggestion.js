@@ -7,6 +7,7 @@ module.exports = {
     .setName("config-suggestion")
     .setDescription("Configure Suggestion.")
     .setDMPermission(false)
+    .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     .addSubcommand((subcommand) => subcommand
         .setName("add")
         .setDescription("Add a suggestion chanel.")
